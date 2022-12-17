@@ -1,7 +1,11 @@
 import React, {useState} from 'react';
 import {TaskType} from "../../types";
+import {useAppDispatch} from "../../app/hooks";
+import {addNewTask, fetchTasks} from "../../containers/ToDoApp/toDoAppThunks";
 
 const TaskForm = () => {
+  const dispatch = useAppDispatch();
+
   const [task, setTask] = useState<TaskType>({
     task: '',
     status: false,
@@ -15,11 +19,17 @@ const TaskForm = () => {
     }));
   };
 
+  const onFormSubmit = (e: React.FormEvent) => {
+    e.stopPropagation();
+    dispatch(addNewTask(task));
+    dispatch(fetchTasks());
+  };
+
   console.log(task);
 
   return (
     <div>
-      <form>
+      <form onSubmit={onFormSubmit}>
         <div className="mb-3">
           <label className="form-label">Enter your task</label>
           <input

@@ -1,6 +1,6 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import axiosApi from "../../axiosApi";
-import {TasksApi, TasksType} from "../../types";
+import {TasksApi, TasksType, TaskType} from "../../types";
 
 export const fetchTasks = createAsyncThunk(
   'toDoApp/fetch',
@@ -20,5 +20,12 @@ export const fetchTasks = createAsyncThunk(
       });
     }
     return newTasks;
+  }
+);
+
+export const addNewTask = createAsyncThunk(
+  'toDoApp/addTask',
+  async (arg: TaskType) => {
+    await axiosApi.post('/tasks.json',  arg);
   }
 );

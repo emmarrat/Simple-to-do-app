@@ -3,6 +3,7 @@ import TaskForm from "../../components/TaskForm/TaskForm";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {fetchTasks} from "./toDoAppThunks";
 import Spinner from "../../components/Spinner/Spinner";
+import TaskCard from "../../components/TaskCard/TaskCard";
 
 const ToDoApp = () => {
 
@@ -16,8 +17,8 @@ const ToDoApp = () => {
 
   return (
     <div>
-      <div>{loadingState ? <Spinner/> : tasksState.map((task) =>(
-        <div key={task.id}>{task.task}</div>
+      <div className="d-flex flex-column align-items-center">{loadingState ? <Spinner/> : tasksState.map((task) =>(
+       <TaskCard key={task.id} task={task}/>
       ))}</div>
       <TaskForm/>
     </div>

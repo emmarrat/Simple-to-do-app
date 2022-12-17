@@ -1,8 +1,7 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {TasksApi, TasksType, TaskType} from "../../types";
-import {RootState} from "../../app/store";
-import axiosApi from "../../axiosApi";
-import {fetchTasks} from "./toDoAppThunks";
+import { createSlice} from "@reduxjs/toolkit";
+import { TasksType} from "../../types";
+
+import {addNewTask, fetchTasks} from "./toDoAppThunks";
 
 interface TasksState {
   tasks: TasksType[];
@@ -12,16 +11,8 @@ interface TasksState {
 const initialState: TasksState = {
   tasks: [],
   fetchLoading: false,
-}
+};
 
-
-
-// export const addNewTask = createAsyncThunk<void, undefined, {state: RootState}>(
-//   'toDoApp/addTask',
-//   async (arg) => {
-//     await axiosApi.post('/tasks.json',  arg);
-//   }
-// )
 
 export const toDoAppSlice = createSlice({
   name: 'toDoApp',
@@ -37,7 +28,16 @@ export const toDoAppSlice = createSlice({
     });
     builder.addCase(fetchTasks.rejected, (state) => {
       state.fetchLoading = false;
-    })
+    });
+    builder.addCase(addNewTask.pending, (state) => {
+      state.fetchLoading = true;
+    });
+    builder.addCase(addNewTask.fulfilled, (state) => {
+      state.fetchLoading = false;
+    });
+    builder.addCase(addNewTask.rejected, (state) => {
+      state.fetchLoading = false;
+    });
   }
 });
 
