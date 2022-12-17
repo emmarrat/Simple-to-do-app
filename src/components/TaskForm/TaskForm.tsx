@@ -19,13 +19,11 @@ const TaskForm = () => {
     }));
   };
 
-  const onFormSubmit = (e: React.FormEvent) => {
+  const onFormSubmit = async (e: React.FormEvent) => {
     e.stopPropagation();
-    dispatch(addNewTask(task));
-    dispatch(fetchTasks());
+    await dispatch(addNewTask(task));
+    await dispatch(fetchTasks());
   };
-
-  console.log(task);
 
   return (
     <div>

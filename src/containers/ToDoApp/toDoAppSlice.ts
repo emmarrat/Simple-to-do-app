@@ -1,4 +1,4 @@
-import { createSlice} from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import { TasksType} from "../../types";
 
 import {addNewTask, fetchTasks} from "./toDoAppThunks";
@@ -17,7 +17,11 @@ const initialState: TasksState = {
 export const toDoAppSlice = createSlice({
   name: 'toDoApp',
   initialState,
-  reducers: {},
+  reducers: {
+    toggleCheckBox: (state, action: PayloadAction<number>,) => {
+      state.tasks[action.payload].status = !state.tasks[action.payload].status;
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchTasks.pending, (state) => {
       state.fetchLoading = true;
@@ -40,5 +44,5 @@ export const toDoAppSlice = createSlice({
     });
   }
 });
-
+export const {toggleCheckBox} = toDoAppSlice.actions;
 export const toDoAppReducer = toDoAppSlice.reducer

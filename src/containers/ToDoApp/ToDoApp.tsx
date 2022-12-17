@@ -4,6 +4,7 @@ import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {fetchTasks} from "./toDoAppThunks";
 import Spinner from "../../components/Spinner/Spinner";
 import TaskCard from "../../components/TaskCard/TaskCard";
+import {toggleCheckBox} from "./toDoAppSlice";
 
 const ToDoApp = () => {
 
@@ -15,10 +16,13 @@ const ToDoApp = () => {
     dispatch(fetchTasks());
   }, [dispatch]);
 
+  console.log(tasksState);
+
   return (
     <div>
-      <div className="d-flex flex-column align-items-center">{loadingState ? <Spinner/> : tasksState.map((task) =>(
-       <TaskCard key={task.id} task={task}/>
+      <div className="d-flex flex-column align-items-center">
+        {loadingState ? <Spinner/> : tasksState.map((task, index) =>(
+       <TaskCard key={task.id} task={task} checkedTask={() => dispatch(toggleCheckBox(index))}/>
       ))}</div>
       <TaskForm/>
     </div>

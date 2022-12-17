@@ -29,3 +29,12 @@ export const addNewTask = createAsyncThunk(
     await axiosApi.post('/tasks.json',  arg);
   }
 );
+
+export const markTaskDone = createAsyncThunk(
+  'toDoApp/markTaskDone',
+  async (arg: TasksType) => {
+    await axiosApi.put('/tasks/' + arg.id + '.json' , arg);
+    // не могу понять как правильно передать аргументы в thunk. понимаю, что уже не правильно указаны, так как в put запросе должен уйти обьект без id
+    // но как передать два аргумента? Если использовать thunkAPI, то как взять правильный индекс обьекта в массиве задач, чтобы указать id?
+  }
+);
