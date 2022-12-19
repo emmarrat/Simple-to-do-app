@@ -45,7 +45,7 @@ const TaskCard: React.FC<Props> = ({task: {id, status, task}, updateApiTask, ind
           </div>
         </div>
         <div>
-          <button onClick={onDelete} className="btn btn-danger">Remove</button>
+          <button disabled={!status} onClick={onDelete} className="btn btn-danger">Remove</button>
         </div>
       </div>
     </div>
