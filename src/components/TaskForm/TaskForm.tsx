@@ -41,6 +41,7 @@ const TaskForm = () => {
             value={task.task}
             className="form-control"
             placeholder="learn coding..."
+            required
           />
         </div>
         <div>
