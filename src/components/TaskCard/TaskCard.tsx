@@ -23,8 +23,10 @@ const TaskCard: React.FC<Props> = ({task: {id, status, task}, updateApiTask, ind
   };
 
   const onDelete = async () => {
-    await dispatch(deleteTask(id));
-    await dispatch(fetchTasks());
+    if (window.confirm('Please confirm deleting selected task')) {
+      await dispatch(deleteTask(id));
+      await dispatch(fetchTasks());
+    }
   };
 
   return (
@@ -33,7 +35,7 @@ const TaskCard: React.FC<Props> = ({task: {id, status, task}, updateApiTask, ind
         <div>
           <p className="card-text"><b>To do: </b>{task}</p>
           <div className="form-check ">
-            <label className="form-check-label">{ status ? 'Task is completed!' : 'Mark if you did the task'}</label>
+            <label className="form-check-label">{status ? 'Task is completed!' : 'Mark if you did the task'}</label>
             <input
               className="form-check-input"
               onChange={onCheckboxClick}
