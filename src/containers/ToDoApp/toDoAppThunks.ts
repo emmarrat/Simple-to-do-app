@@ -3,9 +3,6 @@ import axiosApi from "../../axiosApi";
 import {TasksApi, TasksType, TaskType, updateTaskType} from "../../types";
 import {RootState} from "../../app/store";
 
-
-
-
 export const fetchTasks = createAsyncThunk(
   'toDoApp/fetch',
   async () => {
@@ -38,5 +35,12 @@ export const updateTask = createAsyncThunk<void, updateTaskType, {state: RootSta
   'toDoApp/update',
   async (params) => {
     await axiosApi.put('/tasks/' + params.id + '.json' , params.currentTask);
+  }
+);
+
+export const deleteTask = createAsyncThunk(
+  'toDoApp/delete',
+  async (arg:string) => {
+    await axiosApi.delete('/tasks/' + arg + '.json');
   }
 );

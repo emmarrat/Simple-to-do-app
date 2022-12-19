@@ -23,8 +23,9 @@ const ToDoApp = () => {
   };
 
   return (
-    <div>
+    <>
       <div className="d-flex flex-column align-items-center">
+        <h2 className="mb-5">To-do list</h2>
         {loadingState ? <Spinner/> : tasksState.map((task, index) => (
           <TaskCard
             key={task.id}
@@ -34,8 +35,10 @@ const ToDoApp = () => {
           />
         ))}
       </div>
-      <TaskForm/>
-    </div>
+      <div className="mt-5">
+        <TaskForm/>
+      </div>
+    </>
   );
 };
 

@@ -1,7 +1,7 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import { TasksType} from "../../types";
 
-import {addNewTask, fetchTasks} from "./toDoAppThunks";
+import {addNewTask, deleteTask, fetchTasks} from "./toDoAppThunks";
 
 interface TasksState {
   tasks: TasksType[];
@@ -40,6 +40,15 @@ export const toDoAppSlice = createSlice({
       state.fetchLoading = false;
     });
     builder.addCase(addNewTask.rejected, (state) => {
+      state.fetchLoading = false;
+    });
+    builder.addCase(deleteTask.pending, (state) => {
+      state.fetchLoading = true;
+    });
+    builder.addCase(deleteTask.fulfilled, (state) => {
+      state.fetchLoading = false;
+    });
+    builder.addCase(deleteTask.rejected, (state) => {
       state.fetchLoading = false;
     });
   }

@@ -20,9 +20,13 @@ const TaskForm = () => {
   };
 
   const onFormSubmit = async (e: React.FormEvent) => {
-    e.stopPropagation();
+    e.preventDefault();
     await dispatch(addNewTask(task));
     await dispatch(fetchTasks());
+    setTask(prevState => ({
+      ...prevState,
+      task: '',
+    }));
   };
 
   return (
