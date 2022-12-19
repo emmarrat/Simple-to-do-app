@@ -9,4 +9,9 @@ export interface TasksType extends TaskType {
 
 export interface TasksApi {
   [id: string]: TaskType;
-};
+}
+
+export interface updateTaskType {
+  id: string;
+  currentTask: TaskType;
+}

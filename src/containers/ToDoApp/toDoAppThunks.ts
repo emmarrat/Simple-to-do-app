@@ -1,6 +1,10 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import axiosApi from "../../axiosApi";
-import {TasksApi, TasksType, TaskType} from "../../types";
+import {TasksApi, TasksType, TaskType, updateTaskType} from "../../types";
+import {RootState} from "../../app/store";
+
+
+
 
 export const fetchTasks = createAsyncThunk(
   'toDoApp/fetch',
@@ -30,11 +34,9 @@ export const addNewTask = createAsyncThunk(
   }
 );
 
-export const markTaskDone = createAsyncThunk(
-  'toDoApp/markTaskDone',
-  async (arg: TasksType) => {
-    await axiosApi.put('/tasks/' + arg.id + '.json' , arg);
-    // не могу понять как правильно передать аргументы в thunk. понимаю, что уже не правильно указаны, так как в put запросе должен уйти обьект без id
-    // но как передать два аргумента? Если использовать thunkAPI, то как взять правильный индекс обьекта в массиве задач, чтобы указать id?
+export const updateTask = createAsyncThunk<void, updateTaskType, {state: RootState}>(
+  'toDoApp/update',
+  async (params) => {
+    await axiosApi.put('/tasks/' + params.id + '.json' , params.currentTask);
   }
 );

@@ -1,35 +1,37 @@
 import React, {useState} from 'react';
-import {TasksType} from "../../types";
-import {useDispatch} from "react-redux";
-import {markTaskDone} from "../../containers/ToDoApp/toDoAppThunks";
+import {TasksType, TaskType, updateTaskType} from "../../types";
 
 interface Props {
   task: TasksType;
-  checkedTask: () => void;
+  updateApiTask: (task: updateTaskType, index: number) => void;
+  index: number
 }
 
-const TaskCard: React.FC<Props> = ({task, checkedTask}) => {
-  const dispatch = useDispatch();
-  const [currentTask, setCurrentTask] = useState<TasksType>({
-    task: task.task,
-    status: task.status,
-    id: task.id
+const TaskCard: React.FC<Props> = ({task: {id, status, task}, updateApiTask, index}) => {
+
+  const [currentTask, setCurrentTask] = useState<TaskType>({
+    task: task,
+    status: status,
   });
 
-  const onCheckboxClick = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onCheckboxClick = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {name, checked} = e.target;
     setCurrentTask(prev => ({...prev, [name]: checked}));
-    checkedTask();
-    await dispatch(markTaskDone(currentTask)); // Не могу понять как правильно передать в thunk аргумент.
+    updateApiTask({id: id, currentTask: {task: task, status: checked}}, index);
   };
 
   return (
     <div className="card mb-2 w-50">
       <div className="card-body">
-        <p className="card-text"><b>To do: </b>{task.task}</p>
-        <div className="form-check">
-          <input className="form-check-input" onChange={onCheckboxClick} name="status" type="checkbox" checked={currentTask.status}/>
-          <label className="form-check-label">Switch if you did your task</label>
+        <p className="card-text"><b>To do: </b>{task}</p>
+        <div className="form-check ">
+          <label className="form-check-label">{ status ? 'Task is completed!' : 'Mark the box if you did the task'}</label>
+          <input
+            className="form-check-input"
+            onChange={onCheckboxClick}
+            name="status"
+            type="checkbox"
+            checked={currentTask.status}/>
         </div>
       </div>
     </div>
